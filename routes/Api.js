@@ -4,7 +4,7 @@ var pool=require('../Db/mysqlLib');
 
 
 
-router.get('/places/:region?',function (req,res,next) {
+router.get('/placess/:region?',function (req,res,next) {
     // if(req.params.region){
     //     var selectedregion=req.params.region;
     //     PlacesQuery = "SELECT * from places where region = ? ";
