@@ -5,12 +5,9 @@ var pool=require('../Db/mysqlLib');
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-    pool.query('SELECT * from places', function (error, results, fields) {
-        if (error) {
-          throw error
-        };
-    res.send(results);
-    });
+
+    res.send('CALL API ROUTE ...!');
+
 
 });
 

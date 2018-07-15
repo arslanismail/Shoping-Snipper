@@ -1,6 +1,7 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
+var createError=require('http-errors');
+var express=require('express');
+var path=require('path');
+var bodyParser=require("body-parser");
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
@@ -9,6 +10,8 @@ var usersRouter = require('./routes/users');
 var apiRouter = require('./routes/api');
 
 var app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 require('dotenv').config();
 // view engine setup
