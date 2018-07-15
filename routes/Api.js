@@ -4,14 +4,41 @@ var pool=require('../Db/mysqlLib');
 
         // For All Brands Api
 
-        router.get('/brands',function (req,res,next) {
-            pool.query('select * from brand',function (error,results,fields) {
-                if(error){
-                    throw error
-                }
-                res.send(results);
-            });
+        router.get('/brands/:name?',function (req,res,next) {
+            var queryBuilder="select * from brand";
+            if(req.params.name)
+            {
+                getSingleBrand(queryBuilder,req.params.name,function (data) {
+                    res.send(data);
+                });
+            }else {
+                pool.query(queryBuilder, function (error, results, fields) {
+                    if (error) {
+                        throw error
+                    }
+                    res.send(results);
+                });
+            }
         });
+
+        router.get('/branches/:name?',function (req,res,next) {
+            var queryBuilder="select * from branches";
+            if(req.params.name)
+            {
+                getSingleBranch(queryBuilder,req.params.name,function (data) {
+                    res.send(data);
+                });
+            }else {
+                pool.query(queryBuilder, function (error, results, fields) {
+                    if (error) {
+                        throw error
+                    }
+                    res.send(results);
+                });
+            }
+        });
+
+
 
         //For Categories Api
 
@@ -22,13 +49,14 @@ var pool=require('../Db/mysqlLib');
                 getSingleCategory(queryBuilder,req.params.name,function (data) {
                     res.send(data);
                 });
+            }else {
+                pool.query(queryBuilder, function (error, results, fields) {
+                    if (error) {
+                        throw error
+                    }
+                    res.send(results);
+                });
             }
-            pool.query(queryBuilder,function (error,results,fields) {
-                if(error){
-                    throw error
-                }
-                res.send(results);
-            });
         });
 
 
@@ -161,4 +189,23 @@ var pool=require('../Db/mysqlLib');
                 callback(results);
             });
         }
+        function getSingleBrand(query,name,callback) {
+            query=query+" where brand.name = \""+name+"\"";
+            pool.query(query, function (error, results, fields) {
+                if (error) {
+                    throw error
+                }
+                callback(results);
+            });
+        }
+        function getSingleBranch(query,name,callback) {
+            query=query+" where branches.town = \""+name+"\"";
+            pool.query(query, function (error, results, fields) {
+                if (error) {
+                    throw error
+                }
+                callback(results);
+            });
+        }
+
 module.exports=router;
